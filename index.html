@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casa do Frango | Volta Redonda - RJ</title>
+    
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #d32f2f;   /* Vermelho vibrante */
+            --secondary: #f57c00; /* Laranja dourado */
+            --dark: #1f2937;
+            --light: #f9fafb;
+            --gray: #6b7280;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Top Bar de Destaque */
+        .top-bar {
+            background: var(--secondary);
+            color: white;
+            text-align: center;
+            padding: 0.4rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Header / Menu Navegação */
+        header {
+            background-color: var(--dark);
+            color: white;
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .logo h1 {
+            font-size: 1.6rem;
+            color: #fff;
+        }
+
+        .logo h1 span {
+            color: var(--secondary);
+        }
+
+        .logo p {
+            font-size: 0.75rem;
+            color: #d1d5db;
+            font-weight: 300;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 1.5rem;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--secondary);
+        }
+
+        /* Slider / Carrossel Hero Banner */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 65vh;
+            min-height: 400px;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        /* Imagens Ilustrativas de Exemplo (Açougue / Gastronomia) */
+        .slide:nth-child(1) {
+            background-image: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?auto=format&fit=crop&w=1350&q=80');
+        }
+
+        .slide:nth-child(2) {
+            background-image: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('https://images.unsplash.com/photo-1598103442097-8b74394b95c6?auto=format&fit=crop&w=1350&q=80');
+        }
+
+        .slide:nth-child(3) {
+            background-image: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('https://images.unsplash.com/photo-1587593810167-a84920ea0781?auto=format&fit=crop&w=1350&q=80');
+        }
+
+        .slide-content {
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+            max-width: 800px;
+        }
+
+        .slide-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 0.8rem;
+            color: var(--secondary);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .slide-content p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #b71c1c;
+            transform: translateY(-2px);
+        }
+
+        /* Setas do Slider */
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            font-size: 1.5rem;
+            padding: 0.8rem 1.2rem;
+            cursor: pointer;
+            border: none;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        .prev:hover, .next:hover {
+            background-color: var(--primary);
+        }
+
+        .prev { left: 15px; }
+        .next { right: 15px; }
+
+        /* Seções e Grids */
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 3rem auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 8px;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: var(--secondary);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--light);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--primary);
+        }
+
+        .card h3 {
+            color: var(--primary);
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-list {
+            list-style: none;
+        }
+
+        .info-list li {
+            margin-bottom: 0.9rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .info-list i {
+            color: var(--secondary);
+            margin-top: 4px;
+        }
+
+        /* Rodapé */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 2.5rem 5% 1rem 5%;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            border-top: 1px solid #374151;
+            padding-top: 1rem;
+            font-size: 0.85rem;
+            color: #9ca3af;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .slide-content h2 {
+                font-size: 1.8rem;
+            }
+            .slide-content p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Faixa Destaque -->
+    <div class="top-bar">
+        Mais de 30 anos de tradição em Volta Redonda - RJ
+    </div>
+
+    <!-- Cabeçalho -->
+    <header>
+        <div class="logo">
+            <h1>Casa do <span>Frango</span></h1>
+            <p>Motta e Oliveira LTDA</p>
+        </div>
+        <nav>
+            <a href="#sobre">Tradição</a>
+            <a href="#localizacao">Localização</a>
+            <a href="#empresa">Dados Cadastrais</a>
+        </nav>
+    </header>
+
+    <!-- Slider / Carrossel -->
+    <div class="slider-container">
+        <!-- Slide 1 -->
+        <div class="slide active">
+            <div class="slide-content">
+                <h2>Tradição e Qualidade Desde 1992</h2>
+                <p>Há mais de 3 décadas servindo as famílias de Volta Redonda com atendimento e produtos selecionados.</p>
+                <a href="#localizacao" class="btn">Conheça Nossa Loja</a>
+            </div>
+        </div>
+        <!-- Slide 2 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>Produtos Selecionados</h2>
+                <p>O melhor em frangos e cortes de alta qualidade para o seu dia a dia e almoço em família.</p>
+                <a href="#sobre" class="btn">Nossa História</a>
+            </div>
+        </div>
+        <!-- Slide 3 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>Atendimento no Bairro Siderópolis</h2>
+                <p>Sua referência em Volta Redonda. Faça uma visita à nossa loja na Rua 653.</p>
+                <a href="#localizacao" class="btn">Como Chegar</a>
+            </div>
+        </div>
+
+        <!-- Botões de Navegação -->
+        <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
+        <button class="next" onclick="changeSlide(1)">&#10095;</button>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <div class="container">
+        
+        <!-- Seção Sobre -->
+        <section id="sobre">
+            <div class="section-title">
+                <h2>Nossa História</h2>
+            </div>
+            <p style="text-align: center; max-width: 850px; margin: 0 auto 2rem auto; color: var(--gray);">
+                Fundada em <strong>27 de maio de 1992</strong>, a <strong>Casa do Frango (Motta e Oliveira LTDA)</strong> construiu uma trajetória sólida no bairro Siderópolis, em Volta Redonda. Com foco contínuo na qualidade dos produtos e no respeito ao cliente, mantemos nossa tradição como ponto de referência comercial na região.
+            </p>
+        </section>
+
+        <!-- Seção de Dados e Endereço -->
+        <section id="localizacao">
+            <div class="grid-2">
+                <!-- Card Onde Estamos -->
+                <div class="card">
+                    <h3><i class="fa-solid fa-location-dot"></i> Onde Estamos</h3>
+                    <ul class="info-list">
+                        <li>
+                            <i class="fa-solid fa-map-pin"></i>
+                            <div>
+                                <strong>Endereço:</strong><br>
+                                Rua 653, nº 100<br>
+                                Bairro Siderópolis<br>
+                                CEP: 27211-130
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-city"></i>
+                            <div>
+                                <strong>Cidade / Estado:</strong><br>
+                                Volta Redonda - Rio de Janeiro (RJ)
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Card de Informações Legais -->
+                <div class="card" id="empresa">
+                    <h3><i class="fa-solid fa-building"></i> Informações da Empresa</h3>
+                    <ul class="info-list">
+                        <li>
+                            <i class="fa-solid fa-file-contract"></i>
+                            <div>
+                                <strong>Razão Social:</strong><br>
+                                Motta e Oliveira LTDA
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-id-card"></i>
+                            <div>
+                                <strong>CNPJ:</strong> 39.553.359/0001-21
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-receipt"></i>
+                            <div>
+                                <strong>Inscrição Estadual (RJ):</strong><br>
+                                84.445.99-1
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Rodapé -->
+    <footer>
+        <div class="footer-content">
+            <div>
+                <h3 style="color: var(--secondary); margin-bottom: 0.5rem;">Casa do Frango</h3>
+                <p>Motta e Oliveira LTDA</p>
+                <p style="font-size: 0.85rem; color: #9ca3af; margin-top: 5px;">Tradição e sabor desde 1992.</p>
+            </div>
+            <div>
+                <h4>Endereço</h4>
+                <p>Rua 653, 100 - Siderópolis</p>
+                <p>Volta Redonda - RJ, CEP 27211-130</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Motta e Oliveira LTDA - CNPJ: 39.553.359/0001-21. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Script de Funcionamento do Slider -->
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        function showSlide(index) {
+            slides.forEach((slide) => slide.classList.remove('active'));
+            
+            if (index >= slides.length) {
+                currentSlide = 0;
+            } else if (index < 0) {
+                currentSlide = slides.length - 1;
+            } else {
+                currentSlide = index;
+            }
+
+            slides[currentSlide].classList.add('active');
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Troca automática a cada 5 segundos
+        setInterval(() => {
+            changeSlide(1);
+        }, 5000);
+    </script>
+</body>
+</html>
